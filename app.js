@@ -3,7 +3,7 @@ const http = require("http");
 const mongoose = require("mongoose");
 const { Server } = require("socket.io");
 const cron = require("node-cron");
-const Message = require("./models/Message");
+const Message = require("./models/message");
 require("dotenv").config();
 
 const app = express();
