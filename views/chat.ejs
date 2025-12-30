@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- HEADER -->
+  <div class="chat-header">
+    <div class="user-info">
+      <div class="avatar"
+           style="background:hsl(<%= username.charCodeAt(0) * 10 %>,70%,50%)">
+        <%= username.charAt(0).toUpperCase() %>
+      </div>
+      <div class="user-text">
+        <div class="username"><%= room %></div>
+        <div class="status">Active now</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div id="messages" class="chat-messages">
+    <% messages.forEach(m => { 
+         const isSender = m.user === username;
+         const color = `hsl(${m.user.charCodeAt(0) * 10},70%,50%)`;
+    %>
+      <div class="message <%= isSender ? 'sender' : 'receiver' %>">
+
+        <% if (!isSender) { %>
+          <!-- Receiver avatar bubble -->
+          <div class="msg-avatar" style="background:<%= color %>">
+            <%= m.user.charAt(0).toUpperCase() %>
+          </div>
+        <% } %>
+
+        <div class="bubble">
+          <span class="msg-text"><%= m.text %></span>
+        </div>
+
+      </div>
+    <% }) %>
+  </div>
+
+  <!-- INPUT -->
+  <form id="chat-form" class="chat-input">
+    <input id="msg" placeholder="Type a message..." autocomplete="off">
+    <button>➤</button>
+  </form>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const username = "<%= username %>";
+  const room = "<%= room %>";
+
+  socket.emit("joinRoom", { username, room });
+
+  const form = document.getElementById("chat-form");
+  const input = document.getElementById("msg");
+  const messages = document.getElementById("messages");
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if (!input.value.trim()) return;
+    socket.emit("chatMessage", input.value);
+    input.value = "";
+  });
+
+  socket.on("message", data => {
+    const isSender = data.user === username;
+    const color = `hsl(${data.user.charCodeAt(0) * 10},70%,50%)`;
+
+    const div = document.createElement("div");
+    div.className = "message " + (isSender ? "sender" : "receiver");
+
+    div.innerHTML = `
+      ${!isSender ? `
+        <div class="msg-avatar" style="background:${color}">
+          ${data.user.charAt(0).toUpperCase()}
+        </div>
+      ` : ``}
+      <div class="bubble">
+        <span class="msg-text">${data.text}</span>
+      </div>
+    `;
+
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  });
+</script>
+
+</body>
+</html>

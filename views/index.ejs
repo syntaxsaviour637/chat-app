@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Join Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- HEADER -->
+  <div class="chat-header">
+    <div class="user-info">
+      <div id="previewAvatar" class="avatar">C</div>
+      <div class="user-text">
+        <div class="username">Chat App</div>
+        <div class="status">Connect & chat</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOIN FORM -->
+  <div class="join-container">
+    <form action="/chat" class="join-form">
+      <input
+        type="text"
+        name="username"
+        id="usernameInput"
+        placeholder="Your name"
+        required
+      >
+      <input
+        type="text"
+        name="room"
+        placeholder="Room name"
+        required
+      >
+      <button type="submit">Join Chat</button>
+    </form>
+  </div>
+
+</div>
+
+
+
+</body>
+</html>
