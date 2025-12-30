@@ -1,15 +1,15 @@
 {
-  "name": "chat",
+  "name": "chat-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Real-time chat application using Express, EJS, Socket.IO and MongoDB",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "commonjs",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Pankaj Choudhary",
+  "license": "ISC",
   "dependencies": {
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
@@ -18,5 +18,8 @@
     "mongoose": "^9.0.2",
     "node-cron": "^4.2.1",
     "socket.io": "^4.8.3"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
